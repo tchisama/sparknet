@@ -6,11 +6,12 @@ import { button as buttonStyles } from "@nextui-org/theme";
 import { siteConfig } from "@/config/site";
 import { title, subtitle } from "@/components/primitives";
 import { GithubIcon } from "@/components/icons";
+import { Navbar } from "@/components/navbar";
 
 export default function Home() {
 	return (
-		<section className="">
-
+		<section className="bg-background min-h-screen flex ">
+			<Navbar/>
 		</section>
 	);
 }
