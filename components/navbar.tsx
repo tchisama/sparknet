@@ -1,3 +1,4 @@
+"use client"
 import {
 	Navbar as NextUINavbar,
 	NavbarContent,
@@ -27,16 +28,41 @@ import {
 } from "@/components/icons";
 
 import { Logo } from "@/components/icons";
-import { MessageCircle } from "lucide";
+import { Home, LayoutGrid, MessageCircle, MessageCircleIcon } from "lucide-react";
+import { Divider } from "@nextui-org/react";
+
+
+const size = 20
+const navbarLinks = [
+	{
+		href: "/",
+		label: "Home",
+		icon: <LayoutGrid size={size}/>
+	},
+	{
+		href: "/chat",
+		label: "chat",
+		icon: <MessageCircleIcon size={size}/>
+	},
+]
 
 export const Navbar = () => {
 
 	return (
 		<div className="dark:bg-[#1b1b1b] bg-[#f5f5f5] flex flex-col items-center p-8 min-w-[100px]">
 			<Logo/>
-			<Button size="sm" className="">
-				<MessageCircle />
-			</Button>
+			<Divider className="my-8"/>
+			<div className="flex flex-col gap-2">
+				{
+					navbarLinks.map((item) => (
+						<NextLink key={item.href} href={item.href}>
+							<Button isIconOnly variant="ghost" className="border-none">
+								{item.icon}
+							</Button>
+						</NextLink>
+					))
+				}
+			</div>
 			<ThemeSwitch className="mt-auto"/>
 		</div>
 	);
