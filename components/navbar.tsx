@@ -36,11 +36,6 @@ const size = 26
 const strokeWidth = 1.5
 const navbarLinks = [
 	{
-		href: "/",
-		label: "Home",
-		icon: <LayoutGrid strokeWidth={strokeWidth} size={size}/>
-	},
-	{
 		href: "/chat",
 		label: "chat",
 		icon: <MessageCircleIcon strokeWidth={strokeWidth} size={size}/>
