@@ -39,10 +39,7 @@ export default function RootLayout({
 				)}
 			>
 				<Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
-						<main className="flex min-h-screen text-foreground-700">
-							<Navbar/>
 							{children}
-						</main>
 				</Providers>
 			</body>
 		</html>

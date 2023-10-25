@@ -1,31 +1,9 @@
 "use client"
-import {
-	Navbar as NextUINavbar,
-	NavbarContent,
-	NavbarMenu,
-	NavbarMenuToggle,
-	NavbarBrand,
-	NavbarItem,
-	NavbarMenuItem,
-} from "@nextui-org/navbar";
 import { Button } from "@nextui-org/button";
-import { Kbd } from "@nextui-org/kbd";
-import { Link } from "@nextui-org/link";
-import { Input } from "@nextui-org/input";
 
-import { link as linkStyles } from "@nextui-org/theme";
 
-import { siteConfig } from "@/config/site";
 import NextLink from "next/link";
-import clsx from "clsx";
 import { ThemeSwitch } from "@/components/theme-switch";
-import {
-	TwitterIcon,
-	GithubIcon,
-	DiscordIcon,
-	HeartFilledIcon,
-	SearchIcon,
-} from "@/components/icons";
 
 import { Logo } from "@/components/icons";
 import { Home, LayoutGrid, MessageCircle, MessageCircleIcon } from "lucide-react";
@@ -45,7 +23,7 @@ const navbarLinks = [
 export const Navbar = () => {
 
 	return (
-		<div className="dark:bg-[#1b1b1b] bg-[#f5f5f5] flex flex-col items-center p-8 min-w-[100px]">
+		<div className="dark:bg-[#1b1b1b] bg-[#f5f5f5] flex flex-col items-center p-8 w-[100px]">
 			<Logo/>
 			<Divider className="my-8"/>
 			<div className="flex flex-col gap-2">

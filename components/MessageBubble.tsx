@@ -12,7 +12,7 @@ function MessageBubble({msg}: Props) {
   return (
     <>
     {
-      msg.senderID=="111" ? (
+      !(msg.senderID=="111") ? (
         <div className="chat chat-start">
             <div className="chat-bubble shadow-lg  border dark:border-[#242424] text-foreground-600 bg-[#fff] dark:bg-[#1b1b1b]">
               <div className='text-md'>{msg.content}</div>
