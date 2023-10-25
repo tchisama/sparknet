@@ -32,17 +32,18 @@ import { Home, LayoutGrid, MessageCircle, MessageCircleIcon } from "lucide-react
 import { Divider } from "@nextui-org/react";
 
 
-const size = 20
+const size = 26
+const strokeWidth = 1.5
 const navbarLinks = [
 	{
 		href: "/",
 		label: "Home",
-		icon: <LayoutGrid size={size}/>
+		icon: <LayoutGrid strokeWidth={strokeWidth} size={size}/>
 	},
 	{
 		href: "/chat",
 		label: "chat",
-		icon: <MessageCircleIcon size={size}/>
+		icon: <MessageCircleIcon strokeWidth={strokeWidth} size={size}/>
 	},
 ]
 
@@ -56,7 +57,7 @@ export const Navbar = () => {
 				{
 					navbarLinks.map((item) => (
 						<NextLink key={item.href} href={item.href}>
-							<Button isIconOnly variant="ghost" className="border-none">
+							<Button isIconOnly variant="ghost" size="lg" className="border-none ">
 								{item.icon}
 							</Button>
 						</NextLink>

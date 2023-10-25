@@ -10,8 +10,8 @@ import { Navbar } from "@/components/navbar";
 
 export default function Home() {
 	return (
-		<section className="bg-background min-h-screen flex ">
-			<Navbar/>
+		<section className="flex-1">
+			this is the home page
 		</section>
 	);
 }
