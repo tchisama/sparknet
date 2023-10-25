@@ -1,24 +1,18 @@
 "use client"
+import { Message } from '@/types'
 import { Avatar } from '@nextui-org/react'
 import { Check, CheckCheck } from 'lucide-react'
 import React from 'react'
 
 type Props = {
-  msg:{
-    content: string
-    right: boolean
-    sender: {
-      name: string
-    }
-    date: string
-  }
+  msg:Message
 }
 
 function MessageBubble({msg}: Props) {
   return (
     <>
     {
-      msg.right ? (
+      msg.senderID=="111" ? (
         <div className="chat chat-start">
             <div className="chat-bubble shadow-lg  border dark:border-[#242424] text-foreground-600 bg-[#fff] dark:bg-[#1b1b1b]">
               <div className='text-md'>{msg.content}</div>
