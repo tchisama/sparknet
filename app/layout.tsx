@@ -9,7 +9,7 @@ import clsx from "clsx";
 
 export const metadata: Metadata = {
 	title: {
-		default: siteConfig.name,
+		default: "Sparknet",
 		template: `%s - ${siteConfig.name}`,
 	},
 	description: siteConfig.description,

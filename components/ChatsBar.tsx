@@ -12,7 +12,7 @@ const iconsSize = 20
 
 const ChatsBar = (props: Props) => {
   return (
-    <div className='w-[400px] dark:bg-[#121212]  bg-[#fefefe] h-full p-4'>
+    <div className='w-[400px] flex flex-col dark:bg-[#121212]  bg-[#fefefe] h-screen p-4'>
       <div className='flex items-center justify-between '>
         <h1 className='text-4xl'>Inbox</h1>
         <div className='flex'>

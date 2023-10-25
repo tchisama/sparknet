@@ -2,7 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-
+*::-webkit-scrollbar {
+    width: 2px;
+}
 
 .chat {
     display: grid;
