@@ -7,8 +7,9 @@ import { Divider } from '@nextui-org/react'
 import ListOfChat from './ListOfChat'
 import SearchFriend from './SearchFriend'
 import useChatStore from '@/store/chatsStore'
-import { chatsRef } from '@/firebase'
-import { getDocs, limit, onSnapshot, orderBy, query } from 'firebase/firestore'
+import { auth, chatsRef, userRef } from '@/firebase'
+import { getDocs, limit, onSnapshot, orderBy, query, where } from 'firebase/firestore'
+import useUserStore from '@/store/userStore'
 
 type Props = {}
 
@@ -16,26 +17,29 @@ const iconsSize = 20
 
 const ChatsBar = (props: Props) => {
   const {setChats} = useChatStore()
+  const {user} = useUserStore()
+
   useEffect(() => {
-    const q = query(chatsRef, orderBy("lastMessageTimestamp", "desc"), limit(30));
-    const getChats = onSnapshot(
-      q, 
-      (snapShot)=>{
-        let ch:any = []
-        snapShot.docs.reverse().forEach((doc)=>{
-         ch.push({...doc.data(), id: doc.id})
-         
-        })
-        console.log(ch)
-        setChats(ch)
+    if(user!==null){
+      console.log(user?.UserId)
+      const q = query(chatsRef, where("participants","array-contains",user?.UserId),orderBy("lastMessageTimestamp", "desc"), limit(30));
+      onSnapshot(
+        q, 
+        (snapShot)=>{
+          let ch:any = []
+          snapShot.docs.forEach((doc)=>{
+              ch.push({...doc.data(), id: doc.id})
+          })
+          console.log(ch)
+          setChats(ch)
+        }
+        );
       }
-      );
-      return () => {
-        getChats();
-      }
-  },[])
+  },[user])
+
 
   return (
+
     <div className='w-[400px] flex flex-col dark:bg-[#121212]  bg-[#fefefe] h-screen p-4'>
       <div className='flex items-center justify-between '>
         <h1 className='text-4xl'>Inbox</h1>

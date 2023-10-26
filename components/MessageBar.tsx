@@ -2,33 +2,41 @@
 import React, { useEffect } from 'react'
 import { Button } from '@nextui-org/button'
 import { Image as Img, Send, Smile } from 'lucide-react'
-import { addDoc, collection, doc, limit, onSnapshot, orderBy, query, setDoc } from 'firebase/firestore'
-import { auth, db, messagesRef } from '@/firebase'
+import { addDoc, collection, doc, limit, onSnapshot, orderBy, query, setDoc, updateDoc, where } from 'firebase/firestore'
+import { auth, chatsRef, db, messagesRef } from '@/firebase'
 import useMessageStore from '@/store/messagesStore'
+import useChatStore from '@/store/chatsStore'
 
 type Props = {}
 
 const MessageBar = (props: Props) => {
   const [message, setMessage] = React.useState('')
   const {addMessage,setMessages} = useMessageStore()
+  const {currentChat} = useChatStore()
 
   useEffect(() => {
-    const q = query(messagesRef, orderBy("timestamp", "desc"), limit(100));
-    const getMessages = onSnapshot(
-      q, 
-      (snapShot)=>{
-        let msgs:any = []
-        snapShot.docs.reverse().forEach((doc)=>{
-          msgs.push({...doc.data(), id: doc.id})
-        })
-        console.log(msgs)
-        setMessages(msgs)
+    let unsub:()=>void; // Declare unsub variable outside the if block
+  
+    if (currentChat !== null) {
+      const q = query(messagesRef, where("chatID", "==", currentChat), orderBy("timestamp", "desc"), limit(100));
+      
+      unsub = onSnapshot(q, (snapShot) => {
+        let msgs:any = [];
+        snapShot.docs.reverse().forEach((doc) => {
+          msgs.push({ ...doc.data(), id: doc.id });
+        });
+        console.log(msgs);
+        setMessages(msgs);
+      });
+    }
+  
+    return () => {
+      if (unsub) {
+        unsub(); // Unsubscribe from the previous onSnapshot when the component unmounts or when currentChat changes.
       }
-      );
-      return () => {
-        getMessages();
-      }
-  },[])
+    };
+  }, [currentChat]);
+  
 
   const handleSend =async (e:React.FormEvent) => {
     e.preventDefault();
@@ -40,7 +48,12 @@ const MessageBar = (props: Props) => {
         content:saveMessage,
         timestamp:Date.now(),
         senderID:auth.currentUser?.uid,
-        chatID:"222",
+        chatID:currentChat,
+      })
+      const chatRef = doc(db,"chats",currentChat as string);
+      await updateDoc(chatRef,{
+        lastMessage:saveMessage,
+        lastMessageTimestamp:Date.now(),
       })
 
     }

@@ -4,6 +4,8 @@ import { MessageCircle, Search, UserPlus } from "lucide-react";
 import MessageBubble from "./MessageBubble";
 import { addDoc, and, collection, getDoc, getDocs, onSnapshot, query, where } from "firebase/firestore";
 import { auth, db } from "@/firebase";
+import useUserStore from "@/store/userStore";
+import useChatStore from "@/store/chatsStore";
 
 type User = {
   name: string;
@@ -16,7 +18,10 @@ export default function SearchFriend() {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
   const [username, setUsername] = React.useState("");
   const [user, setUser] = React.useState<User|null>();
+  const {user:currentUser} = useUserStore();
   const [loading, setLoading] = React.useState(false);
+  const {setCurrentChat} =useChatStore()
+
   const handleSearch = (e:React.FormEvent)=>{
     e.preventDefault()
     setLoading(true)
@@ -44,9 +49,22 @@ export default function SearchFriend() {
       addDoc(collection(db,"chats"),{
         chatType:"single",
         participants:[auth.currentUser?.uid,user.UserId],
-        lastMessage:"chat created",
+        participantsUsers:[
+          {
+            name:user.name,
+            id:user.id,
+            UserId:user.UserId
+          },
+          {
+            name:currentUser?.name,
+            id:currentUser?.id,
+            UserId:currentUser?.UserId
+          }
+        ],
+        lastMessage:currentUser?.name+" had oppend the chat",
         lastMessageTimestamp:new Date(),
-      }).then(()=>{
+      }).then((res)=>{
+        setCurrentChat(res.id)
         onOpenChange()
       })
     }
