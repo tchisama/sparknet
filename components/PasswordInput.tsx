@@ -3,7 +3,17 @@ import React from "react";
 import {Input} from "@nextui-org/react";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 
-export default function PasswordInput({label}:{label:string}) {
+export default function PasswordInput(
+    {
+        label,
+        value,
+        onInput,
+    }:
+    {
+        label:string,
+        value:string,
+        onInput: (value:string) => void
+    }) {
   const [isVisible, setIsVisible] = React.useState(false);
 
   const toggleVisibility = () => setIsVisible(!isVisible);
@@ -12,6 +22,8 @@ export default function PasswordInput({label}:{label:string}) {
     <Input
       label={label}
       variant="bordered"
+      value={value}
+      onInput={(e)=>onInput((e.target as HTMLInputElement).value)}
       endContent={
         <button className="focus:outline-none" type="button" onClick={toggleVisibility}>
           {isVisible ? (

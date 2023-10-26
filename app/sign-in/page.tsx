@@ -7,18 +7,22 @@ import React from 'react'
 
 type Props = {}
 
-function page({}: Props) {
+function Page({}: Props) {
+
+  const [email, setEmail] = React.useState("")
+  const [password, setPassword] = React.useState("")
+
   return (
     <div className='flex text-forground-700 items-center justify-center min-h-screen '>
         <div className='w-full flex flex-col gap-2 max-w-[400px]'>
             <h1 className='text-2xl'>Sign in</h1>
             <Divider className='my-8'/>
-            <EmailInput label='Email'/>
-            <PasswordInput label='Password'/>
+            <EmailInput value={email} onInput={setEmail} label='Email'/>
+            <PasswordInput value={password} onInput={setPassword} label='Password'/>
             <Button size='lg' color='secondary'>Sign in</Button>
         </div>
     </div>
   )
 }
 
-export default page
+export default Page
