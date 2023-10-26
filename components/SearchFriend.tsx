@@ -2,8 +2,8 @@ import React from "react";
 import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Input, Avatar, Spinner} from "@nextui-org/react";
 import { MessageCircle, Search, UserPlus } from "lucide-react";
 import MessageBubble from "./MessageBubble";
-import { collection, getDoc, getDocs, onSnapshot, query, where } from "firebase/firestore";
-import { db } from "@/firebase";
+import { addDoc, and, collection, getDoc, getDocs, onSnapshot, query, where } from "firebase/firestore";
+import { auth, db } from "@/firebase";
 
 type User = {
   name: string;
@@ -20,7 +20,7 @@ export default function SearchFriend() {
   const handleSearch = (e:React.FormEvent)=>{
     e.preventDefault()
     setLoading(true)
-    const q = query(collection(db,"users"),where("username","==",username))
+    const q = query(collection(db,"users"), where("username","==",username))
     try {
       onSnapshot(q,(snapShot)=>{
         if (snapShot.docs.length > 0) {
@@ -37,6 +37,18 @@ export default function SearchFriend() {
     } catch (error) {
         setUser(null)
         setLoading(false)
+    }
+  }
+  const CreateChat = ()=>{
+    if(user){
+      addDoc(collection(db,"chats"),{
+        chatType:"single",
+        participants:[auth.currentUser?.uid,user.UserId],
+        lastMessage:"chat created",
+        lastMessageTimestamp:new Date(),
+      }).then(()=>{
+        onOpenChange()
+      })
     }
   }
     return (
@@ -67,7 +79,7 @@ export default function SearchFriend() {
                         <h3 className="text-sm">@{user.username}</h3>
                     </div>
                     <div className="flex h-full items-end">
-                      <Button color={"secondary"}>Open <MessageCircle size={20}/></Button>
+                      <Button onClick={CreateChat} color={"secondary"}>Open <MessageCircle size={20}/></Button>
                     </div>
                 </div>
                 :

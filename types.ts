@@ -5,3 +5,12 @@ export type Message = {
       chatID:string,
       id:string
 }
+
+export type Chat = {
+      id: string;
+      chatType: "single";
+      participants: [string, string];
+      lastMessage: string;
+      lastMessageTimestamp: Date;
+    };
+    

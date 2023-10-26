@@ -1,13 +1,6 @@
+import { Message } from '@/types';
 import create from 'zustand';
 
-// Define the Message type
-export type Message = {
-  content: string;
-  timestamp: Date;
-  senderID: string;
-  chatID: string;
-  id: string;
-};
 
 // Create a Zustand store
 interface MessageStore {
