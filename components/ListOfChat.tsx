@@ -10,7 +10,8 @@ function ListOfChat({}: Props) {
     <div className='flex flex-1 overflow-y-auto flex-col'>
       {
         [1].map((item) => (
-          <OneChatItem key={item}/>
+          // <OneChatItem key={item}/>
+          ""
         ))
       }
     </div>

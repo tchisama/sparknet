@@ -16,7 +16,7 @@ const size = 26
 const strokeWidth = 1.5
 const navbarLinks = [
 	{
-		href: "/chat",
+		href: "/",
 		label: "chat",
 		icon: <MessageCircleIcon strokeWidth={strokeWidth} size={size}/>
 	},

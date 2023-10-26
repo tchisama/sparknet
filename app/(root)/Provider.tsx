@@ -18,7 +18,7 @@ const Provider = ({children}: Props) => {
         }else{
             setLoading(false)
         }
-    },3000)
+    },500)
   },[auth,router])
 
   return (

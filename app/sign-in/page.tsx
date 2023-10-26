@@ -24,7 +24,7 @@ function Page({}: Props) {
       .then((userCredential) => {
         const user = userCredential.user;
         console.log(user)
-        router.push("/chat")
+        router.push("/")
       })
       .catch((error) => {
         const errorCode = error.code;

@@ -5,6 +5,7 @@ import React from 'react'
 import ChatsBarTabs from './ChatsBarTabs'
 import { Divider } from '@nextui-org/react'
 import ListOfChat from './ListOfChat'
+import SearchFriend from './SearchFriend'
 
 type Props = {}
 
@@ -16,8 +17,8 @@ const ChatsBar = (props: Props) => {
       <div className='flex items-center justify-between '>
         <h1 className='text-4xl'>Inbox</h1>
         <div className='flex'>
-          <Button variant='ghost' className='border-none' isIconOnly><Search size={iconsSize}/></Button>
           <Button variant='ghost' className='border-none' isIconOnly><Edit size={iconsSize}/></Button>
+          <SearchFriend/>
         </div>
       </div>
       <ChatsBarTabs/>
