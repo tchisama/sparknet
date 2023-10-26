@@ -21,7 +21,6 @@ const ChatsBar = (props: Props) => {
         </div>
       </div>
       <ChatsBarTabs/>
-      <ListOfChat/>
     </div>
   )
 }

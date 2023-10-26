@@ -6,7 +6,7 @@ import NextLink from "next/link";
 import { ThemeSwitch } from "@/components/theme-switch";
 
 import { Logo } from "@/components/icons";
-import { Home, LayoutGrid, MessageCircle, MessageCircleIcon } from "lucide-react";
+import { Home, LayoutGrid, LogOut, MessageCircle, MessageCircleIcon } from "lucide-react";
 import { Divider } from "@nextui-org/react";
 
 
@@ -37,7 +37,11 @@ export const Navbar = () => {
 					))
 				}
 			</div>
-			<ThemeSwitch className="mt-auto"/>
+			<ThemeSwitch className="mt-auto p-3"/>
+			<Divider className="my-8"/>
+			<Button isIconOnly variant="ghost" size="lg" className="border-none ">
+				<LogOut size={20}/>
+			</Button>
 		</div>
 	);
 };
