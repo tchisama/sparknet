@@ -5,8 +5,9 @@ import { Button } from '@nextui-org/button'
 import { Code, Divider, Input, Spinner } from '@nextui-org/react'
 import React from 'react'
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from '@/firebase'
+import { auth, db } from '@/firebase'
 import { useRouter } from 'next/navigation'
+import { addDoc, collection } from 'firebase/firestore'
 
 type Props = {}
 
@@ -26,8 +27,14 @@ function Page({}: Props) {
     setLoading(true)
     if(name && email && password && username){
       createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
+      .then(async(userCredential) => {
         const user = userCredential.user;
+        await addDoc(collection(db,"users"),{
+          name,
+          username,
+          email,
+          UserId:user.uid
+        })
         console.log(user)
         router.push("/")
       })
