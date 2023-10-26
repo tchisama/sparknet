@@ -8,6 +8,8 @@ import { ThemeSwitch } from "@/components/theme-switch";
 import { Logo } from "@/components/icons";
 import { Home, LayoutGrid, LogOut, MessageCircle, MessageCircleIcon } from "lucide-react";
 import { Divider } from "@nextui-org/react";
+import { auth } from "@/firebase";
+import { useRouter } from "next/navigation";
 
 
 const size = 26
@@ -21,7 +23,7 @@ const navbarLinks = [
 ]
 
 export const Navbar = () => {
-
+	const router = useRouter()
 	return (
 		<div className="dark:bg-[#1b1b1b] bg-[#f5f5f5] flex flex-col items-center p-8 w-[100px]">
 			<Logo/>
@@ -39,7 +41,7 @@ export const Navbar = () => {
 			</div>
 			<ThemeSwitch className="mt-auto p-3"/>
 			<Divider className="my-8"/>
-			<Button isIconOnly variant="ghost" size="lg" className="border-none ">
+			<Button onClick={()=>{auth.signOut(); router.push("/sign-in")}} isIconOnly variant="ghost" size="lg" className="border-none ">
 				<LogOut size={20}/>
 			</Button>
 		</div>

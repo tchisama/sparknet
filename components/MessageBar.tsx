@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import { Button } from '@nextui-org/button'
 import { Image as Img, Send, Smile } from 'lucide-react'
 import { addDoc, collection, doc, limit, onSnapshot, orderBy, query, setDoc } from 'firebase/firestore'
-import { db, messagesRef } from '@/firebase'
+import { auth, db, messagesRef } from '@/firebase'
 import useMessageStore from '@/store/messagesStore'
 
 type Props = {}
@@ -39,7 +39,7 @@ const MessageBar = (props: Props) => {
       await addDoc(collection(db,"messages"),{
         content:saveMessage,
         timestamp:Date.now(),
-        senderID:"111",
+        senderID:auth.currentUser?.uid,
         chatID:"222",
       })
 

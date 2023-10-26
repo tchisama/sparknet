@@ -1,4 +1,5 @@
 "use client"
+import { auth } from '@/firebase'
 import { Message } from '@/types'
 import { Avatar } from '@nextui-org/react'
 import { Check, CheckCheck } from 'lucide-react'
@@ -29,7 +30,7 @@ function MessageBubble({msg}: Props) {
   return (
     <>
     {
-      !(msg.senderID=="111") ? (
+      !(msg.senderID==auth.currentUser?.uid) ? (
         <div className="chat chat-start">
             <div className="chat-bubble shadow-lg  border dark:border-[#242424] text-foreground-600 bg-[#fff] dark:bg-[#1b1b1b]">
               <div className='text-md'>{msg.content}</div>
@@ -41,7 +42,9 @@ function MessageBubble({msg}: Props) {
         <div className="chat drop-shadow-lg chat-end flex">
             <div className="chat-bubble bg-[#7448d9] text-white ">
               <div className='text-md'>{msg.content}</div>
-              <div className='text-sm mt-1 w-full flex gap-2 justify-end items-center'><CheckCheck size={16}/> {formatTime(new Date(msg.timestamp))}</div> 
+              <div className='text-sm mt-1 w-full flex gap-2 justify-end items-center'>
+                {/* <CheckCheck size={16}/>  */}
+                {formatTime(new Date(msg.timestamp))}</div> 
             </div>
         </div>
       )
