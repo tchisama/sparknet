@@ -27,8 +27,19 @@ const MessageBar = (props: Props) => {
         });
         console.log(msgs);
         setMessages(msgs);
-      });
+        snapShot.docs.filter((doc)=>doc.data().seen==false).forEach((doc)=>{
+          if(doc.data().senderID!=auth.currentUser?.uid){
+            updateDoc(doc.ref,{
+              seen:true
+            })
+          }
+        })
+      })
+
+      
     }
+
+
   
     return () => {
       if (unsub) {
@@ -41,7 +52,6 @@ const MessageBar = (props: Props) => {
   const handleSend =async (e:React.FormEvent) => {
     e.preventDefault();
     if(message){
-
       let saveMessage = message;
       setMessage('')
       await addDoc(collection(db,"messages"),{
@@ -49,13 +59,13 @@ const MessageBar = (props: Props) => {
         timestamp:Date.now(),
         senderID:auth.currentUser?.uid,
         chatID:currentChat,
+        seen:false,
       })
       const chatRef = doc(db,"chats",currentChat as string);
       await updateDoc(chatRef,{
         lastMessage:saveMessage,
         lastMessageTimestamp:Date.now(),
       })
-
     }
   }
   return (

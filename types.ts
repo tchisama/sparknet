@@ -3,7 +3,8 @@ export type Message = {
       timestamp:Date,
       senderID:string,
       chatID:string,
-      id:string
+      id:string,
+      seen:boolean
 }
 
 export type Chat = {

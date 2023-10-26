@@ -43,7 +43,12 @@ function MessageBubble({msg}: Props) {
             <div className="chat-bubble bg-[#7448d9] text-white ">
               <div className='text-md'>{msg.content}</div>
               <div className='text-sm mt-1 w-full flex gap-2 justify-end items-center'>
-                {/* <CheckCheck size={16}/>  */}
+                {
+                  msg.seen ?
+                  <CheckCheck size={16}/>
+                  :
+                  <Check size={16}/>
+                }
                 {formatTime(new Date(msg.timestamp))}</div> 
             </div>
         </div>
