@@ -93,6 +93,8 @@ function MessageBubble({msg}: Props) {
 
         )
     )
+  }else{
+    return <></>
   }
 }
 
