@@ -76,14 +76,15 @@ export default function SearchFriend() {
              UserId:user.UserId,
              unreadMessages:1
       })
-
-      addDoc(collection(db,"chatMembers"),{
-            chatID:res.id,
-            name:currentUser?.name,
-            id:currentUser?.id,
-            UserId:currentUser?.UserId,
-            unreadMessages:0
-      })
+      if(currentUser?.UserId!=user.UserId){
+        addDoc(collection(db,"chatMembers"),{
+              chatID:res.id,
+              name:currentUser?.name,
+              id:currentUser?.id,
+              UserId:currentUser?.UserId,
+              unreadMessages:0
+        })
+      }
       })
 
     }

@@ -1,10 +1,14 @@
 import ChatSpace from '@/components/ChatSpace'
 import ChatsBar from '@/components/ChatsBar'
-import React from 'react'
+import { chatMembersRef } from '@/firebase'
+import useChatStore from '@/store/chatsStore'
+import { onSnapshot, query, where } from 'firebase/firestore'
+import React,{useEffect} from 'react'
 
 type Props = {}
 
-const page = (props: Props) => {
+const Page = (props: Props) => {
+  
   return (
     <div className='flex flex-1'>
       <ChatsBar />
@@ -13,4 +17,4 @@ const page = (props: Props) => {
   )
 }
 
-export default page
+export default Page

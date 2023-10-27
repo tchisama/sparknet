@@ -20,6 +20,7 @@ const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const messagesRef = collection(db, "messages");
 export const chatsRef = collection(db, "chats");
+export const chatMembersRef = collection(db, "chatMembers");
 export const userRef = collection(db, "users");
 export const auth = getAuth(app);
 

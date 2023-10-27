@@ -37,6 +37,11 @@ const MessageBar = (props: Props) => {
 
       })
 
+
+          // }else if(chatMembersSnapshot.docs.length == 1){
+          //   ch_.participantsUsers = chatMembersSnapshot.docs[0].data() as ChatParticipant;
+          // }
+
       
     }
 

@@ -7,36 +7,46 @@ import { Divider } from '@nextui-org/react'
 import ListOfChat from './ListOfChat'
 import SearchFriend from './SearchFriend'
 import useChatStore from '@/store/chatsStore'
-import { auth, chatsRef, messagesRef, userRef } from '@/firebase'
+import { auth, chatMembersRef, chatsRef, messagesRef, userRef } from '@/firebase'
 import { and, getDocs, limit, onSnapshot, orderBy, query, where } from 'firebase/firestore'
 import useUserStore from '@/store/userStore'
-import { Chat } from '@/types'
+import { Chat, ChatParticipant } from '@/types'
 
 type Props = {}
 
 const iconsSize = 20
 
 const ChatsBar = (props: Props) => {
-  const {setChats} = useChatStore()
+  const {setChats,chats,setChatMembers} = useChatStore()
   const {user} = useUserStore()
 
   useEffect(() => {
-    if(user!==null){
-      console.log(user?.UserId)
-      const q = query(chatsRef, where("participants","array-contains",user?.UserId),orderBy("lastMessageTimestamp", "desc"), limit(30));
-      onSnapshot(
-        q, 
-        (snapShot)=>{
-          let ch:Chat[] = []
-          snapShot.docs.forEach((doc)=>{
-              ch.push({...doc.data(), id: doc.id}as Chat)
-          })
-          console.log(ch)
-          setChats(ch)
-        }
-        )
-      }
-  },[user])
+    if (user !== null) {
+      const q = query(
+        chatsRef,
+        where("participants", "array-contains", user?.UserId),
+        orderBy("lastMessageTimestamp", "desc"),
+        limit(30)
+      );
+
+      const unsubscribe = onSnapshot(q, (snapShot) => {
+        const chatData: Chat[] = [];
+
+        snapShot.docs.forEach((doc) => {
+          const ch_ = { ...doc.data(), id: doc.id } as Chat;
+          chatData.push(ch_);
+        });
+
+      setChats(chatData)
+      console.log(chatData)
+      });
+
+
+      return () => {
+        unsubscribe();
+      };
+    }
+  }, [user, setChats]);
 
 
   return (
