@@ -49,24 +49,43 @@ export default function SearchFriend() {
       addDoc(collection(db,"chats"),{
         chatType:"single",
         participants:[auth.currentUser?.uid,user.UserId],
-        participantsUsers:[
-          {
-            name:user.name,
-            id:user.id,
-            UserId:user.UserId
-          },
-          {
-            name:currentUser?.name,
-            id:currentUser?.id,
-            UserId:currentUser?.UserId
-          }
-        ],
+        // participantsUsers:[
+        //   {
+        //     name:user.name,
+        //     id:user.id,
+        //     UserId:user.UserId,
+        //     unreadMessages:1
+        //   },
+        //   {
+        //     name:currentUser?.name,
+        //     id:currentUser?.id,
+        //     UserId:currentUser?.UserId,
+        //     unreadMessages:0
+        //   }
+        // ],
         lastMessage:currentUser?.name+" had oppend the chat",
         lastMessageTimestamp:new Date(),
       }).then((res)=>{
         setCurrentChat(res.id)
         onOpenChange()
+
+      addDoc(collection(db,"chatMembers"),{
+             chatID:res.id,
+             name:user.name,
+             id:user.id,
+             UserId:user.UserId,
+             unreadMessages:1
       })
+
+      addDoc(collection(db,"chatMembers"),{
+            chatID:res.id,
+            name:currentUser?.name,
+            id:currentUser?.id,
+            UserId:currentUser?.UserId,
+            unreadMessages:0
+      })
+      })
+
     }
   }
     return (

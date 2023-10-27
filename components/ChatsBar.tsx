@@ -7,9 +7,10 @@ import { Divider } from '@nextui-org/react'
 import ListOfChat from './ListOfChat'
 import SearchFriend from './SearchFriend'
 import useChatStore from '@/store/chatsStore'
-import { auth, chatsRef, userRef } from '@/firebase'
-import { getDocs, limit, onSnapshot, orderBy, query, where } from 'firebase/firestore'
+import { auth, chatsRef, messagesRef, userRef } from '@/firebase'
+import { and, getDocs, limit, onSnapshot, orderBy, query, where } from 'firebase/firestore'
 import useUserStore from '@/store/userStore'
+import { Chat } from '@/types'
 
 type Props = {}
 
@@ -26,14 +27,14 @@ const ChatsBar = (props: Props) => {
       onSnapshot(
         q, 
         (snapShot)=>{
-          let ch:any = []
+          let ch:Chat[] = []
           snapShot.docs.forEach((doc)=>{
-              ch.push({...doc.data(), id: doc.id})
+              ch.push({...doc.data(), id: doc.id}as Chat)
           })
           console.log(ch)
           setChats(ch)
         }
-        );
+        )
       }
   },[user])
 

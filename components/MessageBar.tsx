@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react'
 import { Button } from '@nextui-org/button'
 import { Image as Img, Send, Smile } from 'lucide-react'
-import { addDoc, collection, doc, limit, onSnapshot, orderBy, query, setDoc, updateDoc, where } from 'firebase/firestore'
+import { addDoc, and, collection, doc, getDoc, increment, limit, onSnapshot, orderBy, query, setDoc, updateDoc, where } from 'firebase/firestore'
 import { auth, chatsRef, db, messagesRef } from '@/firebase'
 import useMessageStore from '@/store/messagesStore'
 import useChatStore from '@/store/chatsStore'
@@ -34,6 +34,7 @@ const MessageBar = (props: Props) => {
             })
           }
         })
+
       })
 
       
@@ -66,6 +67,24 @@ const MessageBar = (props: Props) => {
         lastMessage:saveMessage,
         lastMessageTimestamp:Date.now(),
       })
+
+
+      getDoc(doc(db,"chats",currentChat as string)).then((GetC)=>{
+        console.log(GetC.data());
+        const chat = GetC.data();
+        const newChat = chat?.participantsUsers.map((c:any)=>{
+          if(c.UserId!==auth.currentUser?.uid){
+            return {...c,unreadMessages: c.unreadMessages+1 }
+          }
+          else{
+            return c
+          }
+        })
+        console.log(newChat);
+        updateDoc(chatRef,{
+          participantsUsers:newChat
+        })
+      });
     }
   }
   return (

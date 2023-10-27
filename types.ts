@@ -10,17 +10,12 @@ export type Message = {
 export type Chat = {
       id: string;
       name: string;
+      unreadCount: number;
       chatType: "single";
       participants: [string, string];
-      participantsUsers:
-            {
-                  name: string;
-                  UserId: string;
-                  id: string;
-            }[];
       lastMessage: string;
       lastMessageTimestamp: Date;
-    };
+};
     
 
 export type User = {

@@ -14,9 +14,9 @@ function OneChatItem({chat}: Props) {
   const {user} = useUserStore()
   const {currentChat,setCurrentChat} = useChatStore()
   const [chatName, setChatName] = React.useState(chat.name)
+  const [unreadCount, setUnreadCount] = React.useState(0)
   useEffect(()=>{
-    const OtherName  = chat.participantsUsers[0]?.id == user?.id ? chat.participantsUsers[1]?.name : chat.participantsUsers[0]?.name
-    setChatName(OtherName)
+    setChatName("")
   },[user])
   return (
     <div onClick={()=>setCurrentChat(chat.id)} className={'my-1 rounded-xl '+(currentChat === chat.id ? 'bg-foreground-100' : 'bg-[#fff0]')}>
@@ -29,7 +29,10 @@ function OneChatItem({chat}: Props) {
             <div className='flex flex-col gap-2 h-full items-end'>
                 <div className='text-xs'>10:03 PM</div>
                 <div></div>
-                {/* <Chip color='secondary'>3</Chip> */}
+                {
+                    unreadCount > 0 &&
+                    <Chip color='secondary'>{unreadCount}</Chip>
+                }
             </div>
         </div>
     </div>
