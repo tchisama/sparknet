@@ -40,7 +40,7 @@ function MessageBubble({msg}: Props) {
     <>
     {
       !(msg.senderID==auth.currentUser?.uid) ? (
-        <motion.div initial={{opacity:0,x:-100}} animate={{opacity:1,x:0}} className="chat chat-start">
+        <motion.div initial={{opacity:0,x:-30}} animate={{opacity:1,x:0}} className="chat chat-start">
             <div className="chat-bubble shadow-lg  border dark:border-[#242424] text-foreground-600 bg-[#fff] dark:bg-[#1b1b1b]">
               <div className='text-md'>{msg.content}</div>
               <div className='text-sm mt-1 w-full flex gap-2 justify-end items-center'>{formatTime(new Date(msg.timestamp))}</div> 
@@ -48,7 +48,7 @@ function MessageBubble({msg}: Props) {
         </motion.div>
       ):
       (
-        <motion.div initial={{opacity:0,x:100}} animate={{opacity:1,x:0}} className="chat drop-shadow-lg chat-end flex">
+        <motion.div initial={{opacity:0,x:30}} animate={{opacity:1,x:0}} className="chat drop-shadow-lg chat-end flex">
             <div className="chat-bubble bg-[#7448d9] text-white ">
               <div className='text-md'>{msg.content}</div>
               <div className='text-sm mt-1 w-full flex gap-2 justify-end items-center'>
@@ -68,18 +68,18 @@ function MessageBubble({msg}: Props) {
   }else if(msg.type=="image"){
     return (
       !(msg.senderID==auth.currentUser?.uid) ? (
-        <motion.div initial={{opacity:0,x:100}} animate={{opacity:1,x:0}} className=" relative p-4 chat-start flex flex-col">
+        <motion.div initial={{opacity:0,x:30}} animate={{opacity:1,x:0}} className=" relative p-4 chat-start flex flex-col">
 
-              <Image isLoading={loading} shadow='md'  isBlurred src={msg.img} alt="" className='max-w-[400px] max-h-[400px] rounded-lg'/>
+              <Image isLoading={loading} shadow='md'  isBlurred src={msg.img} alt="" className='max-w-[500px] w-full max-h-[500px] rounded-lg'/>
               <div className='text-sm mt-1 w-full flex gap-2 justify-start items-center'>
                 {formatTime(new Date(msg.timestamp))}
               </div> 
         </motion.div>
         ):
         (
-        <motion.div initial={{opacity:0,x:100}} animate={{opacity:1,x:0}} className=" relative p-4 chat-end flex flex-col">
+        <motion.div initial={{opacity:0,x:30}} animate={{opacity:1,x:0}} className=" relative p-4 chat-end flex flex-col">
 
-              <Image isLoading={loading} shadow='md'  isBlurred src={msg.img} alt="" className='max-w-[400px] max-h-[400px] rounded-lg'/>
+              <Image isLoading={loading} shadow='md'  isBlurred src={msg.img} alt="" className='max-w-[500px] w-full max-h-[500px] rounded-lg'/>
               <div className='text-sm mt-1 w-full flex gap-2 justify-end items-center'>
                 {
                   msg.seen ?

@@ -5,7 +5,7 @@ import { Button } from "@nextui-org/button";
 import NextLink from "next/link";
 import { ThemeSwitch } from "@/components/theme-switch";
 
-import { Home, LayoutGrid, LogOut, MessageCircle, MessageCircleIcon } from "lucide-react";
+import { CalendarIcon, FileIcon, FolderIcon, Home, LayoutGrid, LogOut, MessageCircle, MessageCircleIcon } from "lucide-react";
 import { Avatar, Divider, user } from "@nextui-org/react";
 import { auth } from "@/firebase";
 import { useRouter } from "next/navigation";
@@ -19,6 +19,16 @@ const navbarLinks = [
 		href: "/",
 		label: "chat",
 		icon: <MessageCircleIcon strokeWidth={strokeWidth} size={size}/>
+	},
+	{
+		href: "/files",
+		label: "files",
+		icon: <FolderIcon strokeWidth={strokeWidth} size={size}/>
+	},
+	{
+		href: "/calendar",
+		label: "calendar",
+		icon: <CalendarIcon strokeWidth={strokeWidth} size={size}/>
 	},
 ]
 

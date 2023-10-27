@@ -4,7 +4,7 @@ import MessageBar from './MessageBar'
 import MessageBubble from './MessageBubble'
 import useMessageStore from '@/store/messagesStore'
 import useChatStore from '@/store/chatsStore'
-import { Avatar, ScrollShadow } from '@nextui-org/react'
+import { Avatar, ScrollShadow, Spinner } from '@nextui-org/react'
 import ChatNavbar from './ChatNavbar'
 import { Banana, Bone } from 'lucide-react'
 
@@ -15,15 +15,20 @@ function ChatSpace({}: Props) {
   const {messages} = useMessageStore()
   const {currentChat} = useChatStore()
   const scrollRef = React.useRef<HTMLDivElement|null>(null)
+  const [loading, setLoading] = React.useState(false)
   const scrollDown = () => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop += 1000; // Adjust the scrolling amount as needed
     }
   };
   useEffect(() => {
+    setTimeout(() => {
+      scrollDown()
+    }, 1000);
     scrollDown()
-  },[messages])
+  },[messages,currentChat])
   return (
+    !loading?
     <div className='flex-1  bg-[#f5f5f5] dark:bg-background h-screen flex flex-col'>
       {
         currentChat!=null ? 
@@ -45,6 +50,10 @@ function ChatSpace({}: Props) {
           <Banana size={80} strokeWidth={1}/>
         </div>
       }
+    </div>
+    :
+    <div className='flex-1 bg-[#f5f5f5] h-screen flex items-center justify-center'>
+      <Spinner size='lg'/>
     </div>
   )
 }

@@ -8,7 +8,7 @@ type Props = {}
 function ChatsBarTabs({}: Props) {
   return (
     <div className="flex w-full flex-col my-4">
-    <Tabs radius='full' fullWidth aria-label="Options"  >
+    <Tabs size='lg' radius='full' fullWidth aria-label="Options"  >
       <Tab key="Chat" title="Chat">
       <ListOfChat/>
       </Tab>
