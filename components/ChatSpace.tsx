@@ -27,7 +27,7 @@ function ChatSpace({}: Props) {
             <div className='max-w-[800px] mx-auto flex-1 flex w-full py-24 flex-col justify-end'>
               {
                   messages.map((msg) => (
-                    <MessageBubble key={msg.id} msg={msg}/>
+                    <MessageBubble key={msg.id} msg={msg}/> as React.ReactElement
                   ))
               }
             </div>
