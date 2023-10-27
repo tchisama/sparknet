@@ -2,6 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { collection, getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
+import { getStorage } from "firebase/storage";
 
 
 const firebaseConfig = {
@@ -23,4 +24,6 @@ export const chatsRef = collection(db, "chats");
 export const chatMembersRef = collection(db, "chatMembers");
 export const userRef = collection(db, "users");
 export const auth = getAuth(app);
+export const storage = getStorage(app);
+
 

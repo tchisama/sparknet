@@ -6,6 +6,7 @@ import { addDoc, and, collection, doc, getDoc, increment, limit, onSnapshot, ord
 import { auth, chatMembersRef, chatsRef, db, messagesRef } from '@/firebase'
 import useMessageStore from '@/store/messagesStore'
 import useChatStore from '@/store/chatsStore'
+import SendPhoto from './SendPhoto'
 
 type Props = {}
 
@@ -35,13 +36,15 @@ const MessageBar = (props: Props) => {
             })
 
             
-          chatMembers.forEach(async(ch)=>{
-            if(ch.UserId==auth.currentUser?.uid){
-              await updateDoc(doc(db,"chatMembers",ch.frId),{
-                unreadMessages:0
-              })
-            }
-          })
+            setTimeout(()=>{
+                chatMembers.forEach(async(ch)=>{
+                  if(ch.UserId==auth.currentUser?.uid){
+                    await updateDoc(doc(db,"chatMembers",ch.frId),{
+                      unreadMessages:0
+                    })
+                  }
+                })
+            },1000)
 
           }
         })
@@ -77,6 +80,7 @@ const MessageBar = (props: Props) => {
         senderID:auth.currentUser?.uid,
         chatID:currentChat,
         seen:false,
+        type:"msg"
       })
       const chatRef = doc(db,"chats",currentChat as string);
       await updateDoc(chatRef,{
@@ -84,6 +88,7 @@ const MessageBar = (props: Props) => {
         lastMessageTimestamp:Date.now(),
       })
 
+      console.log(chatMembers)
       chatMembers.forEach(async(ch)=>{
         if(ch.UserId!=auth.currentUser?.uid){
           await updateDoc(doc(db,"chatMembers",ch.frId),{
@@ -105,9 +110,7 @@ const MessageBar = (props: Props) => {
               <Smile/>
             </Button>
             <input type="text" value={message} onChange={(e) => setMessage(e.target.value)} className='bg-transparent border-none outline-none p-3 flex-1'/>
-            <Button isIconOnly  variant='ghost' className='border-none' size='lg' >
-              <Img/>
-            </Button>
+            <SendPhoto/>
             <Button type='submit' onClick={handleSend} variant='solid' size='lg' className='bg-[#7448d9] hover:bg-[#6943c4] text-white flex items-center'>
               Send
               <Send size={20}/>

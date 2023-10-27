@@ -35,7 +35,6 @@ function OneChatItem({chat}: Props) {
           chatMData.push(ch_);
         });
       setChatMembers_(chatMData)
-      console.log(chatMData)
       if(chatMData.length==1){
         setName(chatMData[0].name)
         setUnreadMessages(0)

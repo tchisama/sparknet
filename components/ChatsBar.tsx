@@ -38,7 +38,6 @@ const ChatsBar = (props: Props) => {
         });
 
       setChats(chatData)
-      console.log(chatData)
       });
 
 

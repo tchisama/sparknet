@@ -1,11 +1,28 @@
-export type Message = {
-      content:string,
-      timestamp:Date,
-      senderID:string,
-      chatID:string,
-      id:string,
-      seen:boolean
-}
+type TextMessage = {
+      type: "msg";
+      content: string;
+    };
+    
+    type ImageMessage = {
+      type: "image";
+      img: string;
+    };
+    
+    type FileExportMessage = {
+      type: "file";
+      fileName: string;
+    };
+export type Message = (
+      TextMessage |
+      ImageMessage |
+      FileExportMessage
+    ) & {
+      timestamp: Date;
+      senderID: string;
+      chatID: string;
+      id: string;
+      seen: boolean;
+    };
 
 export type Chat = {
       id: string;

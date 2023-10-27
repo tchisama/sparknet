@@ -1,15 +1,16 @@
 "use client"
 import { auth } from '@/firebase'
 import { Message } from '@/types'
-import { Avatar } from '@nextui-org/react'
+import { Avatar, Image } from '@nextui-org/react'
 import { Check, CheckCheck } from 'lucide-react'
-import React from 'react'
+import React, { useEffect } from 'react'
 import {motion} from "framer-motion"
 
 type Props = {
   msg:Message
 }
 function formatTime(date: Date) {
+
   if (!(date instanceof Date)) {
     throw new Error('Invalid input. Please provide a valid Date object.');
   }
@@ -28,6 +29,13 @@ function formatTime(date: Date) {
   return formattedTime;
 }
 function MessageBubble({msg}: Props) {
+  const [loading,setLoading] = React.useState(true)
+  useEffect(()=>{
+    setTimeout(() => {
+      setLoading(false)
+    }, 3000);
+  },[])
+  if(msg.type=="msg"){
   return (
     <>
     {
@@ -57,6 +65,35 @@ function MessageBubble({msg}: Props) {
     }
     </>
   )
+  }else if(msg.type=="image"){
+    return (
+      !(msg.senderID==auth.currentUser?.uid) ? (
+        <motion.div initial={{opacity:0,x:100}} animate={{opacity:1,x:0}} className=" relative p-4 chat-start flex flex-col">
+
+              <Image isLoading={loading} shadow='md'  isBlurred src={msg.img} alt="" className='max-w-[400px] max-h-[400px] rounded-lg'/>
+              <div className='text-sm mt-1 w-full flex gap-2 justify-start items-center'>
+                {formatTime(new Date(msg.timestamp))}
+              </div> 
+        </motion.div>
+        ):
+        (
+        <motion.div initial={{opacity:0,x:100}} animate={{opacity:1,x:0}} className=" relative p-4 chat-end flex flex-col">
+
+              <Image isLoading={loading} shadow='md'  isBlurred src={msg.img} alt="" className='max-w-[400px] max-h-[400px] rounded-lg'/>
+              <div className='text-sm mt-1 w-full flex gap-2 justify-end items-center'>
+                {
+                  msg.seen ?
+                  <CheckCheck size={16}/>
+                  :
+                  <Check size={16}/>
+                }
+                {formatTime(new Date(msg.timestamp))}
+              </div> 
+        </motion.div>
+
+        )
+    )
+  }
 }
 
 export default MessageBubble
