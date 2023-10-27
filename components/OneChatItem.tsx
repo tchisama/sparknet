@@ -30,7 +30,7 @@ function OneChatItem({chat}: Props) {
       const unsubscribe = onSnapshot(q, (snapShot) => {
         const chatMData: ChatMember[] = [];
 
-        snapShot.docs.forEach((doc) => {
+        snapShot.docs.forEach((doc:any) => {
           const ch_ = { ...doc.data(), frId: doc.id } as ChatMember;
           chatMData.push(ch_);
         });

@@ -5,7 +5,6 @@ import { Button } from "@nextui-org/button";
 import NextLink from "next/link";
 import { ThemeSwitch } from "@/components/theme-switch";
 
-import { Logo } from "@/components/icons";
 import { Home, LayoutGrid, LogOut, MessageCircle, MessageCircleIcon } from "lucide-react";
 import { Avatar, Divider, user } from "@nextui-org/react";
 import { auth } from "@/firebase";
@@ -28,7 +27,7 @@ export const Navbar = () => {
 	const {user} = useUserStore()
 	return (
 		<div className="dark:bg-[#1b1b1b] bg-[#f5f5f5] flex flex-col items-center p-8 w-[100px]">
-			<Logo/>
+			{/* <Logo/> */}
 			<Divider className="my-8"/>
 			<div className="flex flex-col gap-2">
 				{
@@ -44,8 +43,8 @@ export const Navbar = () => {
 			<ThemeSwitch className="mt-auto p-3"/>
 			<Avatar name={user?.name}/>
 			<Divider className="my-4"/>
-			<Button onClick={()=>{auth.signOut(); router.push("/sign-in")}} isIconOnly variant="ghost" size="lg" className="border-none ">
-				<LogOut size={20}/>
+			<Button onClick={()=>{auth.signOut(); router.push("/sign-in")}} isIconOnly variant="ghost"  className="border-none ">
+				<LogOut size={18}/>
 			</Button>
 		</div>
 	);
