@@ -13,7 +13,6 @@ export type Chat = {
       unreadCount: number;
       chatType: "single";
       participants: [string, string];
-      participantsUsers: ChatParticipant;
       lastMessage: string;
       lastMessageTimestamp: Date;
 };

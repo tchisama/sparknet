@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import { Button } from '@nextui-org/button'
 import { Image as Img, Send, Smile } from 'lucide-react'
 import { addDoc, and, collection, doc, getDoc, increment, limit, onSnapshot, orderBy, query, setDoc, updateDoc, where } from 'firebase/firestore'
-import { auth, chatsRef, db, messagesRef } from '@/firebase'
+import { auth, chatMembersRef, chatsRef, db, messagesRef } from '@/firebase'
 import useMessageStore from '@/store/messagesStore'
 import useChatStore from '@/store/chatsStore'
 
@@ -12,7 +12,7 @@ type Props = {}
 const MessageBar = (props: Props) => {
   const [message, setMessage] = React.useState('')
   const {addMessage,setMessages} = useMessageStore()
-  const {currentChat} = useChatStore()
+  const {currentChat,chatMembers} = useChatStore()
 
   useEffect(() => {
     let unsub:()=>void; // Declare unsub variable outside the if block
@@ -27,11 +27,22 @@ const MessageBar = (props: Props) => {
         });
         console.log(msgs);
         setMessages(msgs);
-        snapShot.docs.filter((doc)=>doc.data().seen==false).forEach((doc)=>{
-          if(doc.data().senderID!=auth.currentUser?.uid){
-            updateDoc(doc.ref,{
+        snapShot.docs.filter((doc)=>doc.data().seen==false).forEach(async(dc)=>{
+          if(dc.data().senderID!=auth.currentUser?.uid){
+
+            await updateDoc(dc.ref,{
               seen:true
             })
+
+            
+          chatMembers.forEach(async(ch)=>{
+            if(ch.UserId==auth.currentUser?.uid){
+              await updateDoc(doc(db,"chatMembers",ch.frId),{
+                unreadMessages:0
+              })
+            }
+          })
+
           }
         })
 
@@ -73,23 +84,18 @@ const MessageBar = (props: Props) => {
         lastMessageTimestamp:Date.now(),
       })
 
+      chatMembers.forEach((ch)=>{
+        if(ch.UserId!=auth.currentUser?.uid){
+          updateDoc(doc(db,"chatMembers",ch.frId),{
+            unreadMessages:increment(1)
+          })
+        }else{
+          updateDoc(doc(db,"chatMembers",ch.frId),{
+            unreadMessages:0
+          })
+        }
+      })
 
-      getDoc(doc(db,"chats",currentChat as string)).then((GetC)=>{
-        console.log(GetC.data());
-        const chat = GetC.data();
-        const newChat = chat?.participantsUsers.map((c:any)=>{
-          if(c.UserId!==auth.currentUser?.uid){
-            return {...c,unreadMessages: c.unreadMessages+1 }
-          }
-          else{
-            return c
-          }
-        })
-        console.log(newChat);
-        updateDoc(chatRef,{
-          participantsUsers:newChat
-        })
-      });
     }
   }
   return (

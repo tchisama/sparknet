@@ -10,14 +10,14 @@ import useChatStore from '@/store/chatsStore'
 import { auth, chatMembersRef, chatsRef, messagesRef, userRef } from '@/firebase'
 import { and, getDocs, limit, onSnapshot, orderBy, query, where } from 'firebase/firestore'
 import useUserStore from '@/store/userStore'
-import { Chat, ChatParticipant } from '@/types'
+import { Chat, ChatMember, ChatParticipant } from '@/types'
 
 type Props = {}
 
 const iconsSize = 20
 
 const ChatsBar = (props: Props) => {
-  const {setChats,chats,setChatMembers} = useChatStore()
+  const {setChats,chats,currentChat,setChatMembers} = useChatStore()
   const {user} = useUserStore()
 
   useEffect(() => {
@@ -47,6 +47,7 @@ const ChatsBar = (props: Props) => {
       };
     }
   }, [user, setChats]);
+
 
 
   return (
