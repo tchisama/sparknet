@@ -84,13 +84,13 @@ const MessageBar = (props: Props) => {
         lastMessageTimestamp:Date.now(),
       })
 
-      chatMembers.forEach((ch)=>{
+      chatMembers.forEach(async(ch)=>{
         if(ch.UserId!=auth.currentUser?.uid){
-          updateDoc(doc(db,"chatMembers",ch.frId),{
+          await updateDoc(doc(db,"chatMembers",ch.frId),{
             unreadMessages:increment(1)
           })
         }else{
-          updateDoc(doc(db,"chatMembers",ch.frId),{
+          await updateDoc(doc(db,"chatMembers",ch.frId),{
             unreadMessages:0
           })
         }
