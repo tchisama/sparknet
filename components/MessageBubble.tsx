@@ -1,10 +1,11 @@
 "use client"
 import { auth } from '@/firebase'
 import { Message } from '@/types'
-import { Avatar, Image } from '@nextui-org/react'
+import { Avatar, Divider, Image, Popover, PopoverContent, PopoverTrigger } from '@nextui-org/react'
 import { Check, CheckCheck } from 'lucide-react'
 import React, { useEffect } from 'react'
 import {motion} from "framer-motion"
+import { Button, ButtonGroup, ButtonGroupProvider } from '@nextui-org/button'
 
 type Props = {
   msg:Message
@@ -41,10 +42,12 @@ function MessageBubble({msg}: Props) {
     {
       !(msg.senderID==auth.currentUser?.uid) ? (
         <motion.div initial={{opacity:0,x:-30}} animate={{opacity:1,x:0}} className="chat chat-start">
-            <div className="chat-bubble shadow-lg  border dark:border-[#242424] text-foreground-600 bg-[#fff] dark:bg-[#1b1b1b]">
+          <Pop>
+            <div className="chat-bubble shadow-lg cursor-pointer border dark:border-[#242424] text-foreground-600 bg-[#fff] dark:bg-[#1b1b1b]">
               <div className='text-md'>{msg.content}</div>
               <div className='text-sm mt-1 w-full flex gap-2 justify-end items-center'>{formatTime(new Date(msg.timestamp))}</div> 
             </div>
+          </Pop>
         </motion.div>
       ):
       (
@@ -96,6 +99,46 @@ function MessageBubble({msg}: Props) {
   }else{
     return <></>
   }
+}
+
+const Pop = ({children}:{children:React.ReactNode})=>{
+  const reactions = [
+    {
+      icon: "👍",
+      label: 'Like',
+    },
+    {
+      icon: "👎",
+      label: 'Dislike',
+    },
+    {
+      icon: "😄",
+      label: 'Smile',
+    },
+    {
+      icon: "😡",
+      label: 'Angry',
+    }
+
+  ]
+  return(
+    <Popover placement="right">
+    <PopoverTrigger>
+      {children}
+    </PopoverTrigger>
+    <PopoverContent>
+      <div className="py-1">
+        <div className='flex'>
+          {
+            reactions.map((reaction) => (
+              <Button size='sm' variant="light" key={reaction.label} isIconOnly>{reaction.icon}</Button>
+            ))
+          }
+        </div>
+      </div>
+    </PopoverContent>
+  </Popover>
+  )
 }
 
 export default MessageBubble

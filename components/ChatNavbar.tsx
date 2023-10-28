@@ -4,6 +4,7 @@ import { Button } from '@nextui-org/button'
 import { Avatar } from '@nextui-org/react'
 import { PanelRight, Search } from 'lucide-react'
 import React, { useEffect } from 'react'
+import {motion} from "framer-motion"
 
 type Props = {}
 
@@ -20,13 +21,13 @@ const ChatNavbar = (props: Props) => {
     },[chatMembers])
   return (
         <div className='p-4 px-8 flex dark:bg-[#1b1b1b] bg-background justify-between dark:border-none border-b border-l'>
-            <div className='flex gap-4  items-center'>
+            <motion.div initial={{opacity:0,x:-30}} animate={{opacity:1,x:0}} className='flex gap-4  items-center'>
             <Avatar name={name} />
             <div>
                 <h1 className='text-md'>{name}</h1>
                 <p className='text-sm'>Online</p>
             </div>
-            </div>
+            </motion.div>
             <div className='flex gap-2'>
             <Button variant='light' isIconOnly>
                 <Search />

@@ -5,20 +5,25 @@ import { Button } from "@nextui-org/button";
 import NextLink from "next/link";
 import { ThemeSwitch } from "@/components/theme-switch";
 
-import { CalendarIcon, FileIcon, FolderIcon, Home, LayoutGrid, LogOut, MessageCircle, MessageCircleIcon } from "lucide-react";
-import { Avatar, Divider, user } from "@nextui-org/react";
+import { Bell, CalendarIcon, FileIcon, FolderIcon, Home, LayoutGrid, LogOut, MessageCircle, MessageCircleIcon } from "lucide-react";
+import { Avatar, Divider, Tooltip, user } from "@nextui-org/react";
 import { auth } from "@/firebase";
 import { useRouter } from "next/navigation";
 import useUserStore from "@/store/userStore";
 
 
-const size = 26
+const size = 24
 const strokeWidth = 1.5
 const navbarLinks = [
 	{
 		href: "/",
 		label: "chat",
 		icon: <MessageCircleIcon strokeWidth={strokeWidth} size={size}/>
+	},
+	{
+		href: "/notifications",
+		label: "notifications",
+		icon: <Bell strokeWidth={strokeWidth} size={size}/>
 	},
 	{
 		href: "/files",
@@ -42,11 +47,13 @@ export const Navbar = () => {
 			<div className="flex flex-col gap-2">
 				{
 					navbarLinks.map((item) => (
-						<NextLink key={item.href} href={item.href}>
+						<Tooltip size="sm" placement="right" key={item.href} content={item.label}>
+						<NextLink  href={item.href}>
 							<Button isIconOnly variant="ghost" size="lg" className="border-none ">
 								{item.icon}
 							</Button>
 						</NextLink>
+						</Tooltip>
 					))
 				}
 			</div>
