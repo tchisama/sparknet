@@ -21,6 +21,7 @@ const Pop = ({ children,right,msg }: { children: React.ReactNode ,right?:boolean
     const removeMessage = async ()=>{
         await deleteDoc(doc(messagesRef,msg.id))
     }
+    
   return (
     <Popover className="cursor-pointer" placement={right?"left":"right"}>
       <PopoverTrigger>{children}</PopoverTrigger>
