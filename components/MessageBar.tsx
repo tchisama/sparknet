@@ -7,6 +7,10 @@ import { auth, chatMembersRef, chatsRef, db, messagesRef } from '@/firebase'
 import useMessageStore from '@/store/messagesStore'
 import useChatStore from '@/store/chatsStore'
 import SendPhoto from './SendPhoto'
+import InputEmojiWithRef from 'react-input-emoji'
+import InputEmoji from "react-input-emoji"; 
+import EmojiPicker from 'emoji-picker-react'
+import ImojiPicker from './ImojiPicker'
 
 type Props = {}
 
@@ -14,7 +18,7 @@ const MessageBar = (props: Props) => {
   const [message, setMessage] = React.useState('')
   const {addMessage,setMessages} = useMessageStore()
   const {currentChat,chatMembers} = useChatStore()
-
+  const [text, setText] = React.useState(""); 
   useEffect(() => {
     let unsub:()=>void; // Declare unsub variable outside the if block
   
@@ -104,11 +108,10 @@ const MessageBar = (props: Props) => {
     }
   }
   return (
-        <div className='py-2'>
+        <div className='py-2 relative'>
           <form onSubmit={handleSend} className='max-w-[850px] shadow-xl bg-white dark:bg-[#1b1b1b] rounded-2xl p-1 w-full items-center flex gap-2 mx-auto'>
-            <Button isIconOnly  variant='ghost' className='border-none' size='lg' >
-              <Smile/>
-            </Button>
+            
+            <ImojiPicker setMessage={setMessage}/>
             <input type="text" value={message} onChange={(e) => setMessage(e.target.value)} className='bg-transparent border-none outline-none p-3 flex-1'/>
             <SendPhoto/>
             <Button type='submit' onClick={handleSend} variant='solid' size='lg' className='bg-[#7448d9] hover:bg-[#6943c4] text-white flex items-center'>
