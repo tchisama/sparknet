@@ -17,7 +17,6 @@ const ChatNavbar = (props: Props) => {
       }else if(chatMembers.length>1){
         setName(chatMembers.filter((item)=>item.UserId!==auth.currentUser?.uid)[0].name)
       }
-
     },[chatMembers])
   return (
         <div className='p-4 px-8 flex dark:bg-[#1b1b1b] bg-background justify-between dark:border-none border-b border-l'>
